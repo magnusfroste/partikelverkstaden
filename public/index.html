@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Partikelverkstaden – fast, flytande och gas (kemi åk 4–6)</title>
+<meta name="description" content="Se hur partiklarna ligger i fast form, flytande form och gas – och vad som händer när ett ämne värms eller kyls. Kemi åk 4–6. Gratis, ingen inloggning.">
+<meta name="theme-color" content="#faf8f3">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:title" content="Partikelverkstaden">
+<meta property="og:description" content="Fast, flytande, gas – och vad som händer vid värme och kyla. Kemi åk 4–6.">
+<meta property="og:image" content="og.png">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="styles.css">
+<script src="https://www.skolappar.com/kotten.js" defer></script>
+</head>
+<body>
+
+<div id="startskarm">
+  <div class="sk-inner">
+    <img class="sk-ikon" src="icon-192.png" alt="" width="96" height="96">
+    <h1>Partikelverkstaden</h1>
+    <p class="sk-tagline">Fast, flytande och gas – vad gör partiklarna?</p>
+    <div class="sk-taggar"><span>Kemi</span><span>Åk 4–6</span><span>Partikelmodeller</span></div>
+    <button class="sk-play" id="spela" aria-label="Spela Partikelverkstaden">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      Spela
+    </button>
+    <p class="sk-fot">Gratis · ingen inloggning · skolappar.com</p>
+    <details class="sk-laroplan">
+      <summary>Läroplanskoppling (Lgr22)</summary>
+      <p><b>Kemi, åk 4–6, centralt innehåll:</b> ”Materiens uppbyggnad visualiserad med hjälp av enkla partikelmodeller.”</p>
+      <p>Appen visar tre partikelmodeller som rör sig på riktigt: i fast form sitter partiklarna på fasta platser och vibrerar, i flytande form ligger de nära varandra och glider, och i gasform far de omkring och fyller hela utrymmet. Nivå 1: ett ämne visas (is, honung, ånga) och eleven väljer rätt modell. Nivå 2: modellen visas och eleven väljer vilket ämne den hör till – där finns trögflytande honung och gasol under tryck som lockbeten. Nivå 3: en modell värms eller kyls och eleven väljer modellen som blir resultatet, alltså smältning, kokning, kondensering och stelning. Poängen är att partiklarna är desamma hela tiden – det är avståndet och rörelsen som ändras. Källa: Skolverket, läroplanen för grundskolan (Lgr22), kemi åk 4–6.</p>
+    </details>
+  </div>
+</div>
+
+<main id="spel" hidden>
+  <header class="hud">
+    <div class="niva" id="niva" aria-label="nivå"></div>
+    <div class="stjarnor" id="stjarnor" aria-label="stjärnor"></div>
+    <button class="ikon-knapp" id="ljud" aria-label="Ljud på eller av">
+      <svg viewBox="0 0 24 24" aria-hidden="true" id="ljudikon"></svg>
+    </button>
+  </header>
+
+  <div class="fraga" id="fraga"><span id="fragetext">Vilken partikelmodell passar?</span></div>
+
+  <section class="scen" id="scen">
+    <div class="scen-in" id="scenin"></div>
+    <p class="scen-namn" id="scennamn"></p>
+  </section>
+
+  <div class="kort" id="kort"></div>
+
+  <p class="svar" id="svar" aria-live="polite"></p>
+</main>
+
+<div id="overlay" hidden>
+  <div class="ov-inner">
+    <img class="ov-bild" id="ov-bild" alt="" width="112" height="112" src="icon-192.png">
+    <div class="ov-stjarnor" id="ov-stjarnor"></div>
+    <h2 id="ov-titel"></h2>
+    <p class="ov-text" id="ov-text"></p>
+    <div class="ov-knappar">
+      <button class="knapp stor" id="ov-nasta">Nästa nivå</button>
+      <button class="knapp tyst" id="ov-om" hidden>Spela igen</button>
+    </div>
+  </div>
+</div>
+
+<script src="partikel.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
