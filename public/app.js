@@ -46,18 +46,20 @@
     } catch (e) {}
   }
   var senasteTal = 0;
+  /* Rösten är färdiga mp3-filer i ljud/ (se ljud/lines.js). Ingen talsyntes:
+     varje mening appen kan säga finns inspelad, så upplevelsen är densamma i
+     alla webbläsare – och inget barn möts av en robotröst som stavar fel. */
   function sag(text) {
-          try { if (window.__rost && window.__rost(text, true)) return; } catch (e) { }
-    if (!S.ljud || !('speechSynthesis' in window)) return;
-    try {
-      var nu = Date.now();
-      if (nu - senasteTal < 200) return;
-      senasteTal = nu;
-      window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      u.lang = 'sv-SE'; u.rate = 0.97; u.pitch = 1.04;
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
+    if (!S.ljud) {
+      try { if (window.__rostStopp) window.__rostStopp(); } catch (e) {}
+      return;
+    }
+    var nu = Date.now();
+    if (nu - senasteTal < 200) return;
+    senasteTal = nu;
+    try { if (window.__rost && window.__rost(text, true)) return; } catch (e) {}
+    /* saknas filen blir det tyst – bättre än en röst som byter klang */
+    try { if (window.console && window.__rostFinns && !window.__rostFinns(text)) console.warn('saknar mp3:', text); } catch (e) {}
   }
   function ritaLjudikon() {
     el.ljudikon.innerHTML = S.ljud
@@ -422,12 +424,12 @@
       blipp(660, 0.14, 'sine', 0.14);
       setTimeout(function () { blipp(880, 0.14, 'sine', 0.13); }, 130);
       setTimeout(function () { blipp(1046, 0.24, 'sine', 0.12); }, 270);
-      sag('Alla nivåer klara! Du fick ' + S.stjarnor + ' stjärnor.');
+      sag(sista ? 'Alla nivåer klara!' : 'Nivå klar!');
       if ('skolappar' in window && window.skolappar && window.skolappar.event) {
         window.skolappar.event('round_done', Math.round(100 * S.stjarnor / (FRAGOR_PER_NIVA * ANTAL_NIVAR)));
       }
     } else {
-      sag('Nivå ' + (S.niva + 1) + ' klar. Du fick ' + S.nivaStjarnor[S.niva] + ' av ' + FRAGOR_PER_NIVA + ' stjärnor.');
+      sag('Nivå klar!');
     }
   }
 
@@ -466,7 +468,7 @@
   el.ljud.addEventListener('click', function () {
     S.ljud = !S.ljud;
     if (!S.ljud) {
-      try { window.speechSynthesis.cancel(); } catch (e) {}
+      try { if (window.__rostStopp) window.__rostStopp(); } catch (e) {}
       if ('skolappar' in window && window.skolappar && window.skolappar.event) window.skolappar.event('sound_off');
     } else {
       slappLjud();
